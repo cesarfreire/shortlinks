@@ -25,7 +25,7 @@ export function NewShortlinkForm({
 }: React.ComponentProps<"div">) {
   const [shortUrl, setShortUrl] = useState<string | null>(null);
 
-  const { form, handleSubmitWithAction, resetFormAndAction } =
+  const { form, action, handleSubmitWithAction, resetFormAndAction } =
     useHookFormAction(createShortlinkAction, zodResolver(urlSchema), {
       actionProps: {
         onSuccess: (res) => {
@@ -86,8 +86,12 @@ export function NewShortlinkForm({
                   )}
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Short.
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={action.isExecuting}
+              >
+                {action.isExecuting ? "Creating..." : "Short."}
               </Button>
             </div>
           </div>
